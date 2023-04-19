@@ -1,0 +1,46 @@
+Compare Face
+---
+tags:
+  - Face
+
+definitions:
+  - schema:
+      id: Group
+      properties:
+        name:
+         type: string
+         description: the group's name
+
+security:
+  - api_key: []
+
+consumes:
+  - multipart/form-data
+
+parameters:
+  - in: formData
+    name: file
+    type: file
+    description: The file to upload.
+  
+responses:
+  400:
+    description: Bad Data Provided
+    schema:
+      properties:
+        message:
+          type: string
+          desctiption: Invalid inputs
+  401:
+    description: Data Error
+    schema:
+      properties:
+        message:
+          type: string
+          desctiption: Data failed
+  200:
+    description: ML Output
+    schema:
+      properties:
+        data:
+          type: object

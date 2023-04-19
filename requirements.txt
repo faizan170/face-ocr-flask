@@ -1,0 +1,11 @@
+pytesseract
+flask
+flask-restful
+flask-cors
+flask-swagger
+deepface
+opencv-python-headless
+passporteye
+pymongo
+scipy
+scikit-image
