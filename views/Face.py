@@ -30,7 +30,7 @@ class FaceEmbeddings(Resource):
         })
         
 
-        print(name, file)
+        return "Embeddings created for this user"
 
 
 class CompareFaceEmbeddings(Resource):
@@ -40,23 +40,25 @@ class CompareFaceEmbeddings(Resource):
         ---
         swagger_from_file: static/swagger/face/compare.yml
         """
+        try:
+            file = request.files['file']
+            distance_threshold = request.form.get("threshold")
+            if distance_threshold in ["", None]:
+                distance_threshold = 0.4
+            else:
+                distance_threshold = float(distance_threshold)
 
-        file = request.files['file']
-        distance_threshold = request.form.get("threshold")
-        if distance_threshold == "":
-            distance_threshold = 0.4
-        else:
-            distance_threshold = float(distance_threshold)
+            file.save(file.filename)
 
-        file.save(file.filename)
+            ebmeddings = create_embeddings(file.filename)
+            
+            os.remove(file.filename)
+            user = "No user found"
+            for user_data in users.find():
+                distance = compare_embeddings(user_data['embeddings'], ebmeddings)
 
-        ebmeddings = create_embeddings(file.filename)
-        
-        os.remove(file.filename)
-        user = "Not Found"
-        for user in users.find():
-            distance = compare_embeddings(user['embeddings'], ebmeddings)
-
-            if distance < distance_threshold:
-                user = user['name']        
-        return user
+                if distance < distance_threshold:
+                    user = user_data['name']        
+            return user
+        except Exception as ex:
+            return str(ex)

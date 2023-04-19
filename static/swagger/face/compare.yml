@@ -22,6 +22,11 @@ parameters:
     name: file
     type: file
     description: The file to upload.
+
+  - in: formData
+    name: threshold
+    type: text
+    description: threshold to match (0-1), default - 0.4
   
 responses:
   400:

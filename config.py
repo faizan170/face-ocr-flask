@@ -5,7 +5,7 @@ import os
 import pymongo
 
 # establish a connection to the MongoDB server
-client = pymongo.MongoClient(os.getenv("MONGO_CREDENTIALS"))
+client = pymongo.MongoClient(os.getenv("MONGO_CREDENTIALS", "mongodb://localhost:27017"))
 
 # create a new database
 db = client["testdb"]
