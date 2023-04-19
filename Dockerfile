@@ -1,6 +1,6 @@
 FROM python:3.9-slim
 
-RUN apt-get update && apt-get install -y tesseract-ocr
+RUN apt-get update && apt-get install -y tesseract-ocr ffmpeg libsm6 libxext6
 
 
 COPY requirements.txt ./
