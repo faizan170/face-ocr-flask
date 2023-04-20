@@ -58,7 +58,8 @@ class CompareFaceEmbeddings(Resource):
                 distance = compare_embeddings(user_data['embeddings'], ebmeddings)
 
                 if distance < distance_threshold:
-                    user = user_data['name']        
+                    user = user_data['name']    
+                    break    
             return user
         except Exception as ex:
             return str(ex)
